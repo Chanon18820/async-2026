@@ -21,7 +21,7 @@ def main():
         result = calculate_ticket_price(test_age)
         print(result)
     else:
-        test_age = 11
+        test_age = int(input("Enter age: "))
         result = calculate_ticket_price(test_age)
         print(f"Age: {test_age} -> Ticket Price: {result} Baht")
 

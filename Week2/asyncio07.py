@@ -1,2 +1,22 @@
-# Program 7: Dual Tasks Concurrency
-# Concept: Scheduling two distinct tasks concurrently and awaiting them individually without gather.
+# Program 6: Creating a Concurrent Task
+# Concept: Wrapping a coroutine inside asyncio.create_task() to schedule it to run in the background.
+import asyncio
+from time import time, ctime
+
+async def cook_spaghetti(customer):
+    print(f"Starting to cooking from customer {customer}...")
+    await asyncio.sleep(1)  # Simulate cooking time
+    print(f"Finished cooking for customer {customer}!")
+
+async def main():
+    start_time = time()
+    task_a = asyncio.create_task(cook_spaghetti("A"))
+    task_b = asyncio.create_task(cook_spaghetti("B"))  # Schedule another coroutine to run in the background
+    
+
+    await task_a  # Wait for the task to complete
+    await task_b  # Wait for the second task to complete
+    print(f"Total Operation Time: {time() - start_time:.2f} seconds")
+
+if __name__ == "__main__":
+    asyncio.run(main())

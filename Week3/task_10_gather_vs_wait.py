@@ -7,12 +7,12 @@ async def runner(name, speed):
     return f"{name} crossed line!"
 
 async def main():
-    # 
+    # Case A: Using gather() ->We must wait for all tasks to finish before we can access their results
     print(f"{ctime()} --- Starting gather() approach (Unified Aggregation) ---")
     all_finishes = await asyncio.gather(runner("A", 0.5), runner("B", 2.0))
     print(f"{ctime()} Gather output: {all_finishes}\n")
     
-    # 
+    # Case B: Using wait() -> We can access decouple early as soon as a condition matches
     print(f"{ctime()} --- Starting wait() approach (State control / Racing) ---")
     active_tasks = {asyncio.create_task(runner("A", 0.5)), asyncio.create_task(runner("B", 2.0))}
     

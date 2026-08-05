@@ -1,6 +1,5 @@
 from time import time, ctime
 import asyncio
-
 async def greet_diners(customer):
     print(f"{ctime()} Greeting for Customer-{customer} ...")
     await asyncio.sleep(1)  # Simulating a time-consuming task

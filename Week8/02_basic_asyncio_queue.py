@@ -4,20 +4,20 @@ async def producer(queue: asyncio.Queue):
     print("[Producer] กำลังเตรียมส่งข้อมูลเข้าคิว...")
     for item in [" Order #1", "Order #2", "Order #3"]:
         print(f"[Producer] ส่งข้อมูล: {item}")
-        await queue.put(item)  # ใส่ข้อมูลเข้าคิว (FIFO)
-        await asyncio.sleep(0.5)
+        await queue.put(item)  # ใส่ข้อมูลเข้าคิว (FIFO) มันบอกว่าเป็น producer
+        await asyncio.sleep(0.5) #ทำงานทุก 0.5 วิ 3 งาน
 
 async def consumer(queue: asyncio.Queue):
-    print("[Consumer] เริ่มการรอรับข้อมูลจากคิว...")
+    print("[Consumer] เริ่มการรอรับข้อมูลจากคิว...") # มันต้องทำงานก่อน
     while True:
         # ดึงข้อมูลออกจากคิว (ตัวที่เข้ามาก่อน จะถูกดึงออกมาก่อน)
-        item = await queue.get()
+        item = await queue.get() #บรรทัดที่บอกว่าเป็น consumer
         print(f"[Consumer] ดึงข้อมูลออกมาประมวลผล: {item}")
-        await asyncio.sleep(1)
+        await asyncio.sleep(1) #ทำงานทุก 1 วิ ต่อ 1 งาน
         
         # เงื่อนไขหยุดการทำงานเมื่อเจอรายการสุดท้าย
         if item == "Order #3":
-            print("[Consumer] ประมวลผลครบหมดแล้ว!")
+            print("[Consumer] ประมวลผลครบหมดแล้ว!") #ใช้ cerkular buffer เท่านั้นเพราะมีแค่ 3 งาน
             break
 
 async def main():
